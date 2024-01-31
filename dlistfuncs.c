@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:22 by nmellal           #+#    #+#             */
-/*   Updated: 2024/01/29 17:14:14 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/01/29 17:50:02 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_node	*init_node(int data)
 void	push(t_node **head, int data)
 {
 	t_node *newnode;
+	t_node *curr;
 
 	newnode = init_node(data);
 	if (!newnode)
@@ -37,9 +38,11 @@ void	push(t_node **head, int data)
 		*head = newnode;
 		return ;
 	}
-	newnode->next = *head;
-	(*head)->prev = newnode;
-	*head = newnode;
+	curr = *head;
+	while (curr->next)
+		curr = curr->next;
+	curr->next = newnode;
+	newnode->prev = curr;
 }
 int	pop(t_node **head)
 {
@@ -151,15 +154,15 @@ int	is_valid_num(char *str)
 {
 	int	i;
 
-	if (*str == '\0')
-		return (0);
+	// if (*str == '\0')
+	// 	return (0);
 	i = 0;
 	while (str[i] == 32 || (i[str] >= 9 && i[str] <= 13))
 		i++;
 	while (i[str] == '-' || i[str] == '+')
 		i++;
-	if (!ft_isdigit(str[i]))
-        return (0);
+	// if (!ft_isdigit(str[i]))
+    //     return (0);
 	while (str[i])
 	{
 		if (!ft_isdigit(i[str]))
@@ -175,7 +178,10 @@ void	parsing_args(int ac, char **av, t_node **stack_a)
 	i = 1;
 	while (i < ac)
 	{
-		process_args(av[i], stack_a);
+		if (*av[i] == '\0')
+			i++;
+		else
+			process_args(av[i], stack_a);
 		i++;
 	}
 }
@@ -190,8 +196,10 @@ void	process_args(char *arg, t_node **stack_a)
 		numbrs = ft_split(arg, ' ');
 		while (numbrs[j])
 		{
+			// printf("%s\n", numbrs[j]);
 			add_to_stack(numbrs[j], stack_a);
 			free(numbrs[j]);
+			j++;
 		}
 		free(numbrs);
 	}
@@ -203,10 +211,11 @@ void	process_args(char *arg, t_node **stack_a)
 
 void	add_to_stack(char *num_str, t_node **stack_a)
 {
+
 	if (!is_valid_num(num_str))
 	{
 		ft_putstr_fd("oops, i think some args are not numbers", 2);
-		return ;
+		exit(1) ;
 	}
 	push(stack_a, ft_atoi(num_str));
 }
@@ -214,14 +223,12 @@ void	add_to_stack(char *num_str, t_node **stack_a)
 int main(int argc, char **argv)
 {
 	t_node *stack_a;
-
 	stack_a = NULL;
 	if (argc < 2)
 	{
-		ft_putstr_fd("Usage: ./push_swap n1 n2 ...", 2);
+		ft_putstr_fd("Usage: ./push_swap n1 n2 ...\n", 2);
 		return (1);
 	}
-	printf("hahaha/n");
 	parsing_args(argc, argv, &stack_a);
 	// to be continue
 	display_list(stack_a);
