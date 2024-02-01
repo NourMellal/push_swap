@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:24 by nmellal           #+#    #+#             */
-/*   Updated: 2024/01/28 20:59:57 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/01/31 15:59:05 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <unistd.h>
 #include "libft.h"
 #include "ft_printf.h"
-typedef struct s_node
+ typedef struct s_node
 {
 
 	int			n;

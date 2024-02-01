@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:22 by nmellal           #+#    #+#             */
-/*   Updated: 2024/01/29 17:50:02 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/01/31 16:10:12 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,9 @@ int	is_valid_num(char *str)
 	while (str[i])
 	{
 		if (!ft_isdigit(i[str]))
+		{
 			return (0);
+		}
 		i++;
 	}
 	return (1);
@@ -181,8 +183,10 @@ void	parsing_args(int ac, char **av, t_node **stack_a)
 		if (*av[i] == '\0')
 			i++;
 		else
+		{
 			process_args(av[i], stack_a);
-		i++;
+			i++;
+		}
 	}
 }
 void	process_args(char *arg, t_node **stack_a)
@@ -214,7 +218,7 @@ void	add_to_stack(char *num_str, t_node **stack_a)
 
 	if (!is_valid_num(num_str))
 	{
-		ft_putstr_fd("oops, i think some args are not numbers", 2);
+		ft_putstr_fd("oops, i think some args are not numbers\n", 2);
 		exit(1) ;
 	}
 	push(stack_a, ft_atoi(num_str));
