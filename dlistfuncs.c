@@ -6,227 +6,197 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:22 by nmellal           #+#    #+#             */
-/*   Updated: 2024/01/31 16:10:12 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/02/04 17:01:35 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-t_node	*init_node(int data)
+t_node *init_node(int data)
 {
-	t_node	*newnode;
-
-	newnode = malloc(sizeof(t_node));
-	if (!newnode)
-		return (NULL);
-	newnode->n = data;
-	newnode->next = NULL;
-	newnode->prev = NULL;
-	return (newnode);
+    t_node *newnode;
+    newnode = malloc(sizeof(t_node));
+    if (!newnode)
+        return (NULL);
+    newnode->n = data;
+    newnode->next = NULL;
+    newnode->prev = NULL;
+    return (newnode);
 }
 
-void	push(t_node **head, int data)
+void push(t_node **head, int data)
 {
-	t_node *newnode;
-	t_node *curr;
-
-	newnode = init_node(data);
-	if (!newnode)
-		return ;
-	if (!*head)
-	{
-		*head = newnode;
-		return ;
-	}
-	curr = *head;
-	while (curr->next)
-		curr = curr->next;
-	curr->next = newnode;
-	newnode->prev = curr;
-}
-int	pop(t_node **head)
-{
-	int data;
-	t_node	*tmp;
-
-	if (!*head)
-		return (-1);
-	data = (*head)->n;
-	tmp = *head;
-	*head = (*head)->next;
-	if (*head)
-		(*head)->prev = NULL;
-	free(tmp);
-	return (data);
-}
-void	swap(t_node **head)
-{
-	t_node	*first;
-	t_node	*second;
-
-	if (!*head || !(*head)->next)
-		return ;
-	first = *head;
-	second = first->next;
-	/* start swapping */
-	first->next = second->next;
-	first->prev = second;
-	second->next = first;
-	second->prev = NULL;
-	if (first->next)
-		first->next->prev = first;
-	*head = second;
-}
-void	rotate(t_node **head)
-{
-	t_node *first;
-	t_node *last;
-
-	if (!*head || !(*head)->next)
-		return ;
-	last = *head;
-	first = *head;
-	while (last->next)
-		last = last->next;
-	*head = (*head)->next;
-	(*head)->prev = NULL;
-	last->next = first;
-	first->prev = last;
-	first->next = NULL;
-}
-void reverse_rotate(t_node **head)
-{
-	t_node	*last;
-	t_node	*first;
-
-	if (!*head || !(*head)->next)
-		return ;
-	first = *head;
-	last = *head;
-	while (last->next)
-		last = last->next;
-	last->prev->next = NULL;
-	last->next = first;
-	first->prev = last;
-	last->prev = NULL;
-	*head = last;
-}
-int	list_length(t_node *head)
-{
-	int	count;
-
-	count = 0;
-	while (head)
-	{
-		count++;
-		head = head->next;
-	}
-	return (count);
+    t_node *newnode = init_node(data);
+    if (!newnode)
+        return;
+    if (!*head)
+    {
+        *head = newnode;
+        return;
+    }
+    newnode->next = *head;
+    (*head)->prev = newnode;
+    *head = newnode;
 }
 
-void	delete_list(t_node **head)
+int pop(t_node **head)
 {
-	t_node *current;
-	t_node	*next;
-
-	current = *head;
-	while (current)
-	{
-		next = current->next;
-		free(current);
-		current = next;
-	}
-	*head = NULL;
-}
-void	display_list(t_node *head)
-{
-	while (head)
-	{
-		ft_printf("%d", head->n);
-		if (head->next)
-			ft_printf(" ");
-		head = head->next;
-	}
-	ft_printf("\n");
+    int data;
+    t_node *tmp;
+    if (!*head)
+        return (-1);
+    data = (*head)->n;
+    tmp = *head;
+    *head = (*head)->next;
+    if (*head)
+        (*head)->prev = NULL;
+    free(tmp);
+    return (data);
 }
 
-int	is_valid_num(char *str)
+void swap(t_node **head, char stack_name)
 {
-	int	i;
-
-	// if (*str == '\0')
-	// 	return (0);
-	i = 0;
-	while (str[i] == 32 || (i[str] >= 9 && i[str] <= 13))
-		i++;
-	while (i[str] == '-' || i[str] == '+')
-		i++;
-	// if (!ft_isdigit(str[i]))
-    //     return (0);
-	while (str[i])
-	{
-		if (!ft_isdigit(i[str]))
-		{
-			return (0);
-		}
-		i++;
-	}
-	return (1);
-}
-void	parsing_args(int ac, char **av, t_node **stack_a)
-{
-	int	i;
-
-	i = 1;
-	while (i < ac)
-	{
-		if (*av[i] == '\0')
-			i++;
-		else
-		{
-			process_args(av[i], stack_a);
-			i++;
-		}
-	}
-}
-void	process_args(char *arg, t_node **stack_a)
-{
-	char	**numbrs;
-	int		j;
-
-	j = 0;
-	if (ft_strchr(arg, ' '))
-	{
-		numbrs = ft_split(arg, ' ');
-		while (numbrs[j])
-		{
-			// printf("%s\n", numbrs[j]);
-			add_to_stack(numbrs[j], stack_a);
-			free(numbrs[j]);
-			j++;
-		}
-		free(numbrs);
-	}
-	else
-	{
-		add_to_stack(arg, stack_a);
-	}
+    t_node *first, *second;
+    if (!*head || !(*head)->next)
+        return;
+    first = *head;
+    second = first->next;
+    first->next = second->next;
+    second->next = first;
+    second->prev = first->prev;
+    first->prev = second;
+    if (first->next)
+        first->next->prev = first;
+    *head = second;
+    ft_printf("s%c\n", stack_name);
 }
 
-void	add_to_stack(char *num_str, t_node **stack_a)
+void rotate(t_node **head, char stack_name)
 {
-
-	if (!is_valid_num(num_str))
-	{
-		ft_putstr_fd("oops, i think some args are not numbers\n", 2);
-		exit(1) ;
-	}
-	push(stack_a, ft_atoi(num_str));
+    t_node *first, *last;
+    if (!*head || !(*head)->next)
+        return;
+    first = *head;
+    last = *head;
+    while (last->next)
+        last = last->next;
+    *head = first->next;
+    (*head)->prev = NULL;
+    last->next = first;
+    first->prev = last;
+    first->next = NULL;
+    ft_printf("r%c\n", stack_name);
 }
 
+void reverse_rotate(t_node **head, char stack_name)
+{
+    t_node *first;
+    if (!*head || !(*head)->next)
+        return;
+    first = *head;
+    while (first->next)
+        first = first->next;
+    first->prev->next = NULL;
+    first->next = *head;
+    (*head)->prev = first;
+    first->prev = NULL;
+    *head = first;
+    ft_printf("rr%c\n", stack_name);
+}
+
+int list_length(t_node *head)
+{
+    int count = 0;
+    while (head)
+    {
+        count++;
+        head = head->next;
+    }
+    return (count);
+}
+
+void delete_list(t_node **head)
+{
+    t_node *current, *next;
+    current = *head;
+    while (current)
+    {
+        next = current->next;
+        free(current);
+        current = next;
+    }
+    *head = NULL;
+}
+
+void display_list(t_node *head)
+{
+    while (head)
+    {
+        ft_printf("%d ", head->n);
+        head = head->next;
+    }
+    ft_printf("\n");
+}
+
+int is_valid_num(char *str)
+{
+    int i = 0;
+    while (str[i])
+    {
+        if (!ft_isdigit(str[i]))
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
+void parsing_args(int ac, char **av, t_node **stack_a)
+{
+    int i = 1;
+    while (i < ac)
+    {
+        if (*av[i] != '\0')
+            process_args(av[i], stack_a);
+        i++;
+    }
+}
+
+void process_args(char *arg, t_node **stack_a)
+{
+    char **numbrs;
+    int j = 0;
+    if (ft_strchr(arg, ' '))
+    {
+        numbrs = ft_split(arg, ' ');
+        while (numbrs[j])
+        {
+            add_to_stack(numbrs[j], stack_a);
+            free(numbrs[j]);
+            j++;
+        }
+        free(numbrs);
+    }
+    else
+    {
+        add_to_stack(arg, stack_a);
+    }
+}
+
+void add_to_stack(char *num_str, t_node **stack_a)
+{
+    if (!is_valid_num(num_str))
+    {
+        ft_putstr_fd("Error\n", 2);
+        exit(1);
+    }
+    push(stack_a, ft_atoi(num_str));
+}
 int main(int argc, char **argv)
 {
 	t_node *stack_a;
+	// t_node *stack_b;
+
+	// stack_b = NULL;
 	stack_a = NULL;
 	if (argc < 2)
 	{

@@ -54,7 +54,7 @@ CC =	cc
 
 ICNLUDES = libft.h
 
-CFLAGS =	-Wall -Werror -Wextra -I ${ICNLUDES}
+CFLAGS =	-Wall -Werror -Wextra
 
 NAME = libft.a
 
