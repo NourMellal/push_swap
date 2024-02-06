@@ -6,13 +6,13 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:54:04 by iel-mach          #+#    #+#             */
-/*   Updated: 2023/11/17 18:24:06 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/02/06 15:41:27 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *s)
+long	ft_atoi(const char *s)
 {
 	int				sign;
 	unsigned long	rus;

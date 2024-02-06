@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 # Project file names
-SRC = dlistfuncs.c
+SRC = dlistfuncs.c sortingfunc.c
 OBJ = $(SRC:.c=.o)
 NAME = push_swap
 

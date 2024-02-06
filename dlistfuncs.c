@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:22 by nmellal           #+#    #+#             */
-/*   Updated: 2024/01/31 16:10:12 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/02/06 16:11:13 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,24 +153,29 @@ void	display_list(t_node *head)
 int	is_valid_num(char *str)
 {
 	int	i;
+	int j;
 
-	// if (*str == '\0')
-	// 	return (0);
+	j = 0;
 	i = 0;
 	while (str[i] == 32 || (i[str] >= 9 && i[str] <= 13))
 		i++;
-	while (i[str] == '-' || i[str] == '+')
+	if (i[str] == '-' || i[str] == '+')
 		i++;
-	// if (!ft_isdigit(str[i]))
-    //     return (0);
+	if (!ft_isdigit(str[i]))
+        return (0);
+	while (i[str] == '0')
+		i++;
 	while (str[i])
 	{
-		if (!ft_isdigit(i[str]))
-		{
+		if (!ft_isdigit(i[str])) /* +000002056008454854*/
 			return (0);
-		}
 		i++;
+		j++;
 	}
+	if (ft_strlen(&str[i - j]) > 10)
+		return (0);
+	if (ft_atoi(str) > INT_MAX || ft_atoi(str) < INT_MIN)
+		return (0);
 	return (1);
 }
 void	parsing_args(int ac, char **av, t_node **stack_a)
@@ -221,6 +226,7 @@ void	add_to_stack(char *num_str, t_node **stack_a)
 		ft_putstr_fd("oops, i think some args are not numbers\n", 2);
 		exit(1) ;
 	}
+
 	push(stack_a, ft_atoi(num_str));
 }
 
@@ -231,9 +237,15 @@ int main(int argc, char **argv)
 	if (argc < 2)
 	{
 		ft_putstr_fd("Usage: ./push_swap n1 n2 ...\n", 2);
-		return (1);
+		exit (1);
 	}
 	parsing_args(argc, argv, &stack_a);
+	if (!check_for_dup(stack_a));
+	{
+		delete_list(&stack_a);
+		ft_putstr_fd("Error\n", 2);
+		exit(1);
+	}
 	// to be continue
 	display_list(stack_a);
 	delete_list(&stack_a);

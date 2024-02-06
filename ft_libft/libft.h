@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 18:50:08 by nmellal           #+#    #+#             */
-/*   Updated: 2023/11/16 15:51:07 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/02/06 15:41:53 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ char				*ft_strchr(const char *s, int c);
 char				*ft_strrchr(const char *s, int c);
 char				*ft_strnstr(const char *haystack, const char *needle,
 						size_t n);
-int					ft_isalnum(int i);
-int					ft_isalpha(int i);
-int					ft_isascii(int i);
-int					ft_isdigit(int i);
-int					ft_isprint(int i);
-int					ft_tolower(int c);
-int					ft_toupper(int c);
-int					ft_atoi(const char *str);
+int						ft_isalnum(int i);
+int						ft_isalpha(int i);
+int						ft_isascii(int i);
+int						ft_isdigit(int i);
+int						ft_isprint(int i);
+int						ft_tolower(int c);
+int						ft_toupper(int c);
+long					ft_atoi(const char *str);
 /* part 2 functions */
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
