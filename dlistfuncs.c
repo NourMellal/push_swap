@@ -6,13 +6,10 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:22 by nmellal           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/02/06 16:11:13 by nmellal          ###   ########.fr       */
-=======
-/*   Updated: 2024/02/04 17:11:29 by nmellal          ###   ########.fr       */
->>>>>>> 6534a4bf7a626fba0ae258bda0b9e36ae1d95365
+/*   Updated: 2024/02/08 16:25:28 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "pushswap.h"
 
@@ -121,7 +118,29 @@ int list_length(t_node *head)
 
 void delete_list(t_node **head)
 {
-<<<<<<< HEAD
+    t_node *current, *next;
+    current = *head;
+    while (current)
+    {
+        next = current->next;
+        free(current);
+        current = next;
+    }
+    *head = NULL;
+}
+
+void display_list(t_node *head)
+{
+    while (head)
+    {
+        ft_printf("%d ", head->n);
+        head = head->next;
+    }
+    ft_printf("\n");
+}
+
+int is_valid_num(char *str)
+{
 	int	i;
 	int j;
 
@@ -147,39 +166,6 @@ void delete_list(t_node **head)
 	if (ft_atoi(str) > INT_MAX || ft_atoi(str) < INT_MIN)
 		return (0);
 	return (1);
-=======
-    t_node *current, *next;
-    current = *head;
-    while (current)
-    {
-        next = current->next;
-        free(current);
-        current = next;
-    }
-    *head = NULL;
->>>>>>> 6534a4bf7a626fba0ae258bda0b9e36ae1d95365
-}
-
-void display_list(t_node *head)
-{
-    while (head)
-    {
-        ft_printf("%d ", head->n);
-        head = head->next;
-    }
-    ft_printf("\n");
-}
-
-int is_valid_num(char *str)
-{
-    int i = 0;
-    while (str[i])
-    {
-        if (!ft_isdigit(str[i]))
-            return (0);
-        i++;
-    }
-    return (1);
 }
 
 void parsing_args(int ac, char **av, t_node **stack_a)
@@ -192,16 +178,13 @@ void parsing_args(int ac, char **av, t_node **stack_a)
         i++;
     }
 }
+	// if (!is_valid_num(num_str))
+	// {
+	// 	ft_putstr_fd("oops, i think some args are not numbers\n", 2);
+	// 	exit(1) ;
+	// }
 
-<<<<<<< HEAD
-	if (!is_valid_num(num_str))
-	{
-		ft_putstr_fd("oops, i think some args are not numbers\n", 2);
-		exit(1) ;
-	}
-
-	push(stack_a, ft_atoi(num_str));
-=======
+	// push(stack_a, ft_atoi(num_str));
 void process_args(char *arg, t_node **stack_a)
 {
     char **numbrs;
@@ -221,7 +204,6 @@ void process_args(char *arg, t_node **stack_a)
     {
         add_to_stack(arg, stack_a);
     }
->>>>>>> 6534a4bf7a626fba0ae258bda0b9e36ae1d95365
 }
 
 void add_to_stack(char *num_str, t_node **stack_a)
@@ -233,6 +215,28 @@ void add_to_stack(char *num_str, t_node **stack_a)
     }
     push(stack_a, ft_atoi(num_str));
 }
+int	check_for_dup(t_node *stack_a)
+{
+	t_node *curr;
+	t_node *nxt;
+
+	if (!stack_a)
+		return (1);
+	curr = stack_a;
+	while (curr)
+	{
+		nxt = curr->next;
+		while (nxt)
+		{
+			if (curr->n == nxt->n)
+				return (0);
+			nxt = nxt->next;
+		}
+		curr = curr->next;
+	}
+	return (1);
+}
+
 int main(int argc, char **argv)
 {
 	t_node *stack_a;
@@ -246,7 +250,7 @@ int main(int argc, char **argv)
 		exit (1);
 	}
 	parsing_args(argc, argv, &stack_a);
-	if (!check_for_dup(stack_a));
+	if (!check_for_dup(stack_a))
 	{
 		delete_list(&stack_a);
 		ft_putstr_fd("Error\n", 2);

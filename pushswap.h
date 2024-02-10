@@ -6,11 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:24 by nmellal           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/02/01 20:56:45 by nmellal          ###   ########.fr       */
-=======
-/*   Updated: 2024/02/04 16:59:29 by nmellal          ###   ########.fr       */
->>>>>>> 6534a4bf7a626fba0ae258bda0b9e36ae1d95365
+/*   Updated: 2024/02/08 15:32:42 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +43,8 @@ int is_valid_num(char *str);
 void parsing_args(int ac, char **av, t_node **stack_a);
 void process_args(char *arg, t_node **stack_a);
 void add_to_stack(char *num_str, t_node **stack_a);
+int	check_for_dup(t_node *stack_a);
+
 
 /* sorting implementation */
 
