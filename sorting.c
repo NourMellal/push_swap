@@ -23,7 +23,6 @@
 //     return (1);
 // }
 
-
 // void	sort_two(t_node **stack)
 // {
 // 	if (!is_sorted(stack))
