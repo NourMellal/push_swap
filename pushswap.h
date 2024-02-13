@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:24 by nmellal           #+#    #+#             */
-/*   Updated: 2024/02/08 15:32:42 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/02/13 21:35:56 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void				parsing_args(int ac, char **av, t_node **stack_a);
 void				process_args(char *arg, t_node **stack_a);
 void				add_to_stack(char *num_str, t_node **stack_a);
 int					check_for_dup(t_node *stack_a);
+void				push_to(t_node **stack_from, t_node **stack_to, char stack_name);
+
 
 /* sorting implementation */
 

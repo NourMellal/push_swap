@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:22 by nmellal           #+#    #+#             */
-/*   Updated: 2024/02/08 16:25:28 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/02/13 21:35:32 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,16 @@ void	push(t_node **head, int data)
 	newnode->next = *head;
 	(*head)->prev = newnode;
 	*head = newnode;
+}
+void	push_to(t_node **stack_from, t_node **stack_to, char stack_name)
+{
+	int	n;
+
+	if (!stack_from)
+		return ;
+	push(stack_to, (*stack_from)->n);
+	n = pop(stack_from);
+	ft_printf("p%c\n", stack_name);
 }
 
 int	pop(t_node **head)
