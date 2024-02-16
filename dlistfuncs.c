@@ -6,12 +6,54 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:22 by nmellal           #+#    #+#             */
-/*   Updated: 2024/02/13 21:35:32 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/02/16 18:18:43 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
+void	rr(t_node **stack_a, t_node **stack_b)
+{
+	rotate(stack_a);
+	rotate(stack_b);
+	ft_printf("rr\n");
+}
+void	sa(t_node **stack_a)
+{
+	swap(stack_a);
+	ft_printf("sa\n");
+}
+void	sb(t_node **stack_b)
+{
+	swap(stack_b);
+	ft_printf("sb\n");
+}
+void	ra(t_node **stack_a)
+{
+	rotate(stack_a);
+	ft_printf("ra\n");
+}
+void	rb(t_node **stack_b)
+{
+	rotate(stack_b);
+	ft_printf("rb\n");
+}
+void	rra(t_node **stack_a)
+{
+	reverse_rotate(stack_a);
+	ft_printf("rra\n");
+}
+void	rrb(t_node **stack_b)
+{
+	reverse_rotate(stack_b);
+	ft_printf("rrb\n");
+}
+void	rrr(t_node **stack_a, t_node **stack_b)
+{
+	reverse_rotate(stack_a);
+	reverse_rotate(stack_b);
+	ft_printf("rrr\n");
+}
 t_node	*init_node(int data)
 {
 	t_node	*newnode;
@@ -25,9 +67,16 @@ t_node	*init_node(int data)
 	return (newnode);
 }
 
+void	display_error(void)
+{
+	ft_putstr_fd("Error\n", 2);
+	exit (1);
+}
+
 void	push(t_node **head, int data)
 {
 	t_node	*newnode;
+	t_node	*curr;
 
 	newnode = init_node(data);
 	if (!newnode)
@@ -37,19 +86,11 @@ void	push(t_node **head, int data)
 		*head = newnode;
 		return ;
 	}
-	newnode->next = *head;
-	(*head)->prev = newnode;
-	*head = newnode;
-}
-void	push_to(t_node **stack_from, t_node **stack_to, char stack_name)
-{
-	int	n;
-
-	if (!stack_from)
-		return ;
-	push(stack_to, (*stack_from)->n);
-	n = pop(stack_from);
-	ft_printf("p%c\n", stack_name);
+	curr = *head;
+	while (curr->next)
+		curr = curr->next;
+	curr->next = newnode;
+	newnode->prev = curr;
 }
 
 int	pop(t_node **head)
@@ -67,8 +108,17 @@ int	pop(t_node **head)
 	free(tmp);
 	return (data);
 }
+void	push_to(t_node **stack_from, t_node **stack_to, char stack_name)
+{
+	if (!*stack_from)
+		return ;
+	push(stack_to, (*stack_from)->n);
+	pop(stack_from);
+	ft_printf("p%c\n", stack_name);
+}
 
-void	swap(t_node **head, char stack_name)
+
+void	swap(t_node **head)
 {
 	t_node *first, *second;
 	if (!*head || !(*head)->next)
@@ -82,10 +132,9 @@ void	swap(t_node **head, char stack_name)
 	if (first->next)
 		first->next->prev = first;
 	*head = second;
-	ft_printf("s%c\n", stack_name);
 }
 
-void	rotate(t_node **head, char stack_name)
+void	rotate(t_node **head)
 {
 	t_node *first, *last;
 	if (!*head || !(*head)->next)
@@ -99,10 +148,9 @@ void	rotate(t_node **head, char stack_name)
 	last->next = first;
 	first->prev = last;
 	first->next = NULL;
-	ft_printf("r%c\n", stack_name);
 }
 
-void	reverse_rotate(t_node **head, char stack_name)
+void	reverse_rotate(t_node **head)
 {
 	t_node	*first;
 
@@ -116,7 +164,6 @@ void	reverse_rotate(t_node **head, char stack_name)
 	(*head)->prev = first;
 	first->prev = NULL;
 	*head = first;
-	ft_printf("rr%c\n", stack_name);
 }
 
 int	list_length(t_node *head)
@@ -191,8 +238,7 @@ void	parsing_args(int ac, char **av, t_node **stack_a)
 	i = 1;
 	while (i < ac)
 	{
-		if (*av[i] != '\0')
-			process_args(av[i], stack_a);
+		process_args(av[i], stack_a);
 		i++;
 	}
 }
@@ -212,6 +258,12 @@ void	process_args(char *arg, t_node **stack_a)
 	if (ft_strchr(arg, ' '))
 	{
 		numbrs = ft_split(arg, ' ');
+		if (!numbrs)
+		{
+			delete_list(stack_a);
+			free(numbrs);
+			display_error();
+		}
 		while (numbrs[j])
 		{
 			add_to_stack(numbrs[j], stack_a);
@@ -229,10 +281,7 @@ void	process_args(char *arg, t_node **stack_a)
 void	add_to_stack(char *num_str, t_node **stack_a)
 {
 	if (!is_valid_num(num_str))
-	{
-		ft_putstr_fd("Error\n", 2);
-		exit(1);
-	}
+		display_error();
 	push(stack_a, ft_atoi(num_str));
 }
 int	check_for_dup(t_node *stack_a)
@@ -260,23 +309,26 @@ int	check_for_dup(t_node *stack_a)
 int	main(int argc, char **argv)
 {
 	t_node	*stack_a;
+	t_node *stack_b;
 
-	// t_node *stack_b;
-	// stack_b = NULL;
+	stack_b = NULL;
 	stack_a = NULL;
 	if (argc < 2)
-	{
-		ft_putstr_fd("Usage: ./push_swap n1 n2 ...\n", 2);
-		exit(1);
-	}
+		return (0);
 	parsing_args(argc, argv, &stack_a);
 	if (!check_for_dup(stack_a))
 	{
 		delete_list(&stack_a);
-		ft_putstr_fd("Error\n", 2);
-		exit(1);
+		display_error();
+	}
+	if ( (stack_a))
+	{
+		delete_list(&stack_a);
+		return (0);
 	}
 	// to be continue
+	display_list(stack_a);
+	starting_point(&stack_a, &stack_b);
 	display_list(stack_a);
 	delete_list(&stack_a);
 	return (0);
