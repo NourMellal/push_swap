@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:22 by nmellal           #+#    #+#             */
-/*   Updated: 2024/02/16 18:18:43 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/02/17 21:11:34 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,6 +306,7 @@ int	check_for_dup(t_node *stack_a)
 	return (1);
 }
 
+
 int	main(int argc, char **argv)
 {
 	t_node	*stack_a;
@@ -321,7 +322,7 @@ int	main(int argc, char **argv)
 		delete_list(&stack_a);
 		display_error();
 	}
-	if ( (stack_a))
+	if (list_is_sorted(stack_a))
 	{
 		delete_list(&stack_a);
 		return (0);

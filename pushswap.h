@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:24 by nmellal           #+#    #+#             */
-/*   Updated: 2024/02/16 01:27:08 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/02/18 00:18:16 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ void				display_error(void);
 
 int		list_is_sorted(t_node *stack);
 void	starting_point(t_node **stack_a, t_node **stack_b);
+int		is_the_max(t_node *stack_a, t_node *stack_b);
+int		is_the_min(t_node *stack_a, t_node *stack_b);
+void	sort_two_desc(t_node **stack);
 // void	sort_two(t_node **stack)
 // int is_sorted(t_node *head)
 
