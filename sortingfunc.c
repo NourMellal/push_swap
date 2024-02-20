@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 00:09:12 by nmellal           #+#    #+#             */
-/*   Updated: 2024/02/20 00:39:09 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/02/20 19:42:52 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ void	starting_point(t_node **stack_a, t_node **stack_b)
 		}
 	}
 	sort_three(stack_a);
+	push_back(stack_a, stack_b);
 }
+
 void	init_push(t_node **stack_a, t_node **stack_b)
 {
 	push_to(stack_a, stack_b, 'b');
