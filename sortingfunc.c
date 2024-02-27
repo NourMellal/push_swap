@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 00:09:12 by nmellal           #+#    #+#             */
-/*   Updated: 2024/02/20 19:42:52 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/02/24 19:17:09 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,38 +48,38 @@ void	init_push(t_node **stack_a, t_node **stack_b)
 }
 void sort_three(t_node **stack)
 {
-    int top = (*stack)->n;
-    int middle = (*stack)->next->n;
-    int bottom = (*stack)->next->next->n;
+	int top = (*stack)->n;
+	int middle = (*stack)->next->n;
+	int bottom = (*stack)->next->next->n;
 
-    if (top > middle && middle < bottom && top < bottom)
-    {
-        // Case: 2 1 3 -> Only need to swap the top two.
-        sa(stack);
-    }
-    else if (top > middle && middle > bottom)
-    {
-        // Case: 3 2 1 -> Swap the top two, then rotate down.
-        sa(stack);
-        rra(stack);
-    }
-    else if (top > middle && middle < bottom && top > bottom)
-    {
-        // Case: 3 1 2 -> Rotate up.
-        ra(stack);
-    }
-    else if (top < middle && middle > bottom && top < bottom)
-    {
-        // Case: 1 3 2 -> Swap the top two, then rotate up.
-        sa(stack);
-        ra(stack);
-    }
-    else if (top < middle && middle > bottom && top > bottom)
-    {
-        // Case: 2 3 1 -> Rotate down.
-        rra(stack);
-    }
-    // If none of the above conditions are met, the stack is already sorted (1 2 3).
+	if (top > middle && middle < bottom && top < bottom)
+	{
+		// Case: 2 1 3 -> Only need to swap the top two.
+		sa(stack);
+	}
+	else if (top > middle && middle > bottom)
+	{
+		// Case: 3 2 1 -> Swap the top two, then rotate down.
+		sa(stack);
+		rra(stack);
+	}
+	else if (top > middle && middle < bottom && top > bottom)
+	{
+		// Case: 3 1 2 -> Rotate up.
+		ra(stack);
+	}
+	else if (top < middle && middle > bottom && top < bottom)
+	{
+		// Case: 1 3 2 -> Swap the top two, then rotate up.
+		sa(stack);
+		ra(stack);
+	}
+	else if (top < middle && middle > bottom && top > bottom)
+	{
+		// Case: 2 3 1 -> Rotate down.
+		rra(stack);
+	}
+	// If none of the above conditions are met, the stack is already sorted (1 2 3).
 }
 
 void	sort_two_asc(t_node **stack)

@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:24 by nmellal           #+#    #+#             */
-/*   Updated: 2024/02/20 17:47:25 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/02/24 18:30:01 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	sort_two_desc(t_node **stack);
 void	sort_two_asc(t_node **stack);
 void	init_push(t_node **stack_a, t_node **stack_b);
 void sort_three(t_node **stack);
-void	push_back(t_node **stack_a, t_node **stack_a);
+void	push_back(t_node **stack_a, t_node **stack_b);
 // void	sort_two(t_node **stack)
 // int is_sorted(t_node *head)
 
