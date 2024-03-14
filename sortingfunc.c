@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sortingfunc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nmellal <nmellal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 00:09:12 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/12 12:56:55 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/14 22:11:30 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,54 @@ int	list_is_sorted(t_node *stack)
 	return (1);
 }
 
+void	swap(int *arr, int i, int j)
+{
+	int tmp;
 
+	tmp = arr[j];
+	arr[j] = arr[i];
+	arr[i] = tmp;
+}
+
+int	partition(int *arr, int start, int end, int arr_size, void (*swap)(int [], int, int))
+{
+	int	i;
+	int	j;
+	// [2, 1, 3, 4, 9, 8, 5<-]
+	i = start - 1;
+	j = 0;
+	while (j < end)
+	{
+		if (arr[j] < arr[end])
+		{
+			i++;
+			swap(arr, i, j);
+		}
+		j++;
+	}
+	i++;
+	if (arr[i] != arr[end])
+		swap(arr, i, end);
+	return (i);
+}
+
+void	quick_sort_helper(int *arr, int start, int end, int arr_size, void (*swap)(int[], int, int))
+{
+	int	pivot;
+
+	if (end <= start)
+		return ;
+	pivot = partition(arr, start, end, arr_size, swap);	
+	quick_sort_helper(arr, start, pivot - 1, arr_size, swap);
+	quick_sort_helper(arr, pivot + 1, end, arr_size, swap);
+}
+
+void	quick_sort(int *arr, int arr_size, void (*swap)(int [], int, int))
+{
+	if (!arr || arr_size < 2)
+		return ;
+	quick_sort_helper(arr, 0, arr_size - 1, arr_size, swap);
+}
 
 void	sort_bigs(t_node **stack_a)
 {
@@ -98,6 +145,8 @@ void	sort_bigs(t_node **stack_a)
 
 	curr = *stack_a;
 	sorted_arr = malloc(sizeof(int) * list_length(*stack_a));
+	if (!sorted_arr)
+		return ;
 	i = 0;
 	while (i < list_length(*stack_a))
 	{
@@ -105,6 +154,7 @@ void	sort_bigs(t_node **stack_a)
 		i++;
 		curr = curr->next;
 	}
+	quick_sort(sorted_arr, list_length(*stack_a), swap);
 }
 
 void	starting_point(t_node **stack_a, t_node **stack_b)
