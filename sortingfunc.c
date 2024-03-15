@@ -6,7 +6,7 @@
 /*   By: nmellal <nmellal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 00:09:12 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/14 22:11:30 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/15 04:49:10 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	list_is_sorted(t_node *stack)
 	return (1);
 }
 
-void	swap(int *arr, int i, int j)
+void	swap_ele(int *arr, int i, int j)
 {
 	int tmp;
 
@@ -97,13 +97,13 @@ void	swap(int *arr, int i, int j)
 	arr[i] = tmp;
 }
 
-int	partition(int *arr, int start, int end, int arr_size, void (*swap)(int [], int, int))
+int	partition(int *arr, int start, int end, void (*swap)(int [], int, int))
 {
 	int	i;
 	int	j;
 	// [2, 1, 3, 4, 9, 8, 5<-]
 	i = start - 1;
-	j = 0;
+	j = start;
 	while (j < end)
 	{
 		if (arr[j] < arr[end])
@@ -125,7 +125,7 @@ void	quick_sort_helper(int *arr, int start, int end, int arr_size, void (*swap)(
 
 	if (end <= start)
 		return ;
-	pivot = partition(arr, start, end, arr_size, swap);	
+	pivot = partition(arr, start, end, swap);	
 	quick_sort_helper(arr, start, pivot - 1, arr_size, swap);
 	quick_sort_helper(arr, pivot + 1, end, arr_size, swap);
 }
@@ -136,25 +136,72 @@ void	quick_sort(int *arr, int arr_size, void (*swap)(int [], int, int))
 		return ;
 	quick_sort_helper(arr, 0, arr_size - 1, arr_size, swap);
 }
+void print_array(const int *array, size_t size)
+{
+	size_t i;
+
+	i = 0;
+	while (array && i < size)
+	{
+		if (i > 0)
+			printf(", ");
+		printf("%d", array[i]);
+		++i;
+	}
+	printf("\n");
+}
+
+int ft_sqrt(int nb)
+{
+	int sqrt;
+
+	if (nb <= 0)
+		return (0);
+	sqrt = 1;
+	while (sqrt * sqrt <= nb)
+	{
+		if (sqrt * sqrt == nb)
+			return (sqrt);
+		sqrt++;
+	}
+	return (sqrt);
+}
+
+t_control_var	define_ctrl_var(int size, int div)
+{
+	t_control_var control;
+
+	control.size = size;
+	control.div = div;
+	control.mid = size / 2 - 1;
+	control.offset = size / div;
+	control.start = 0;
+	control.end = size - 1;
+	return control;
+}
 
 void	sort_bigs(t_node **stack_a)
 {
-	int *sorted_arr;
-	int	i;
-	t_node	*curr;
-
+	int				 *sorted_arr;
+	int				i;
+	t_node			*curr;
+	t_control_var	ctrl;
+	int				size;
+	
 	curr = *stack_a;
-	sorted_arr = malloc(sizeof(int) * list_length(*stack_a));
+	size = list_length(*stack_a);
+	sorted_arr = malloc(sizeof(int) * size);
 	if (!sorted_arr)
 		return ;
 	i = 0;
-	while (i < list_length(*stack_a))
+	while (i < size)
 	{
 		sorted_arr[i] = curr->n;
 		i++;
 		curr = curr->next;
 	}
-	quick_sort(sorted_arr, list_length(*stack_a), swap);
+	quick_sort(sorted_arr, size, swap_ele);
+	ctrl = define_ctrl_var(size, ft_sqrt(size));	
 }
 
 void	starting_point(t_node **stack_a, t_node **stack_b)

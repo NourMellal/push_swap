@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dlistfuncs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nmellal <nmellal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:22 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/09 17:29:10 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/15 01:54:49 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,9 +343,9 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	// to be continue
-	display_list(stack_a);
 	starting_point(&stack_a, &stack_b);
 	display_list(stack_a);
 	delete_list(&stack_a);
 	return (0);
 }
+ 

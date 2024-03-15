@@ -1,5 +1,5 @@
 # Compiler and compiling flags
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 # Project file names
@@ -22,7 +22,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	make -C $(LIBFT)
 	make -C $(FT_PRINTF)
-	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
+	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME) -pie
 
 # Object file creation
 %.o: %.c

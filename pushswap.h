@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pushswap.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nmellal <nmellal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:24 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/12 12:54:46 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/15 04:49:40 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ typedef struct s_node
 	struct s_node	*prev;
 
 }					t_node;
+
+typedef	struct s_control_var
+{
+	int size;
+	int	div;
+	int mid;
+	int offset;
+	int start;
+	int end;
+}				t_control_var;
 
 /* stacks/parsing implementation*/
 
@@ -71,5 +81,13 @@ void	push_back(t_node **stack_a, t_node **stack_b);
 // int is_sorted(t_node *head)
 int	find_min_position(t_node *stack, int *min);
 void	sort_bigs(t_node **stack_a);
+void swap_ele(int *arr, int i, int j);
+int partition(int *arr, int start, int end, void (*swap)(int [], int, int));
+void quick_sort_helper(int *arr, int start, int end, int arr_size, void (*swap)(int[], int, int));
+void quick_sort(int *arr, int arr_size, void (*swap)(int [], int, int));
+void print_array(const int *array, size_t size);
+int ft_sqrt(int nb);
+t_control_var	define_ctrl_var(int size, int div);
+
 
 #endif /* PUSHSWAP */
