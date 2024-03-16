@@ -6,7 +6,7 @@
 /*   By: nmellal <nmellal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:22 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/15 01:54:49 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/16 01:44:26 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,7 +345,7 @@ int	main(int argc, char **argv)
 	// to be continue
 	starting_point(&stack_a, &stack_b);
 	display_list(stack_a);
+	display_list(stack_b);
 	delete_list(&stack_a);
 	return (0);
 }
- 

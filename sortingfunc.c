@@ -6,7 +6,7 @@
 /*   By: nmellal <nmellal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 00:09:12 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/15 04:49:10 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/16 02:54:19 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ void	to_top(t_node **stack_a, t_node **stack_b, int position, int min_value)
 {
 	if ((list_length(*stack_a) / 2) < position + 1)
 	{
-		while ((*stack_a)->n != min_value)
+		while (position--)
 			rra(stack_a);
 		push_to(stack_a, stack_b, 'b');
 	}
 	else
 	{
-		while ((*stack_a)->n != min_value)
+		while (position--)
 			ra(stack_a);
 		push_to(stack_a, stack_b, 'b');
 	}
-
+	(void)min_value;
 }
 
 void	sort_five(t_node **stack_a, t_node **stack_b)
@@ -167,25 +167,100 @@ int ft_sqrt(int nb)
 	return (sqrt);
 }
 
-t_control_var	define_ctrl_var(int size, int div)
+t_ctrl	define_ctrl_var(int size, int div)
 {
-	t_control_var control;
+	t_ctrl control;
 
 	control.size = size;
 	control.div = div;
 	control.mid = size / 2 - 1;
 	control.offset = size / div;
-	control.start = 0;
-	control.end = size - 1;
+	control.start = control.mid - control.offset;
+	control.end = control.mid + control.offset;
 	return control;
 }
+int		is_in_range(t_ctrl ctrl, int *arr, int elem)
+{
+	int i;
 
-void	sort_bigs(t_node **stack_a)
+	i = ctrl.start;
+	while (i <= ctrl.end)
+	{
+		if (elem == arr[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+int	find_elem_in_range(t_node *stack_a, int *arr, t_ctrl ctrl)
+{
+	int	i;
+	int position;
+
+	position = 0;
+	while (stack_a)
+	{
+		i = ctrl.start;
+		while (i <= ctrl.end)
+		{
+			if (arr[i] == stack_a->n)
+				return (position);
+			i++;
+		}
+		stack_a = stack_a->next;
+		position++;
+	}
+	// if all elements not in the range (so we need to update ctrl)
+	return (-1);
+}
+t_ctrl	update_ctrl(t_ctrl ctrl)
+{
+	ctrl.start -= ctrl.offset;
+	if (ctrl.start < 0)
+		ctrl.start = 0;
+	ctrl.end += ctrl. offset;
+	return (ctrl);
+}
+
+void	push_back_to_a(t_node **stack_a, t_node **stack_b)
+{
+	int pos;
+
+	pos = find_max(stack_b);
+}
+void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
+{
+	int		pos;
+	
+	// print_array(arr, ctrl.size);
+	while (*stack_a)
+	{
+		// printf("mid: %d, offset: %d, start: %d, end: %d, arr[mid]: %d\n",ctrl.mid, ctrl.offset, ctrl.start, ctrl.end, arr[ctrl.mid]);
+		if (is_in_range(ctrl, arr, (*stack_a)->n))
+		{
+			push_to(stack_a, stack_b, 'b');
+			if ((*stack_b)->n < arr[ctrl.mid])
+				rb(stack_b);
+		}
+		else if(find_elem_in_range(*stack_a, arr, ctrl) != -1)
+		{
+			pos = find_elem_in_range(*stack_a, arr, ctrl);
+			to_top(stack_a, stack_a, pos, 0);
+			if ((*stack_b)->n < arr[ctrl.mid])
+				rb(stack_b);
+		}
+		else
+			ctrl = update_ctrl(ctrl);
+	}
+	push_back_to_a(stack_a, stack_b);
+}
+
+void	sort_bigs(t_node **stack_a, t_node **stack_b)
 {
 	int				 *sorted_arr;
 	int				i;
 	t_node			*curr;
-	t_control_var	ctrl;
+	t_ctrl	ctrl;
 	int				size;
 	
 	curr = *stack_a;
@@ -201,7 +276,8 @@ void	sort_bigs(t_node **stack_a)
 		curr = curr->next;
 	}
 	quick_sort(sorted_arr, size, swap_ele);
-	ctrl = define_ctrl_var(size, ft_sqrt(size));	
+	ctrl = define_ctrl_var(size, ft_sqrt(size));
+	sorting_proc(stack_a, stack_b, sorted_arr, ctrl);
 }
 
 void	starting_point(t_node **stack_a, t_node **stack_b)
@@ -216,7 +292,7 @@ void	starting_point(t_node **stack_a, t_node **stack_b)
 		sort_three(stack_a);
 		return ;
 	}
-	sort_bigs(stack_a);
+	sort_bigs(stack_a, stack_b);
 }
 
 void sort_three(t_node **stack)
