@@ -6,7 +6,7 @@
 /*   By: nmellal <nmellal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 00:09:12 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/16 02:54:19 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/16 03:26:17 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,22 @@ void	to_top(t_node **stack_a, t_node **stack_b, int position, int min_value)
 		push_to(stack_a, stack_b, 'b');
 	}
 	(void)min_value;
+}
+
+void	to_top2(t_node **stack_b, t_node **stack_a, int position)
+{
+	if ((list_length(*stack_b) / 2) < position + 1)
+	{
+		while (position--)
+			rra(stack_b);
+		push_to(stack_b, stack_a, 'a');
+	}
+	else
+	{
+		while (position--)
+			ra(stack_b);
+		push_to(stack_b, stack_a, 'a');
+	}
 }
 
 void	sort_five(t_node **stack_a, t_node **stack_b)
@@ -56,6 +72,7 @@ int	find_min_position(t_node *stack, int *min)
 
 	*min = INT_MAX;
 	i = 0;
+	position = 0;
 	while (stack)
 	{
 		if (stack->n < *min)
@@ -221,12 +238,34 @@ t_ctrl	update_ctrl(t_ctrl ctrl)
 	ctrl.end += ctrl. offset;
 	return (ctrl);
 }
+int	find_max_pos(t_node *stack_b)
+{
+	int max;
+	int	pos;
+	int	i;
+
+	i = 0;
+	pos = 0;
+	max = INT_MIN;
+	while (stack_b)
+	{
+		if (stack_b->n > max)
+		{
+			max = stack_b->n;
+			pos = i;
+		}
+		stack_b = stack_b->next;
+		i++;
+	}
+	return (pos);
+}
 
 void	push_back_to_a(t_node **stack_a, t_node **stack_b)
 {
 	int pos;
 
-	pos = find_max(stack_b);
+	pos = find_max_pos(*stack_b);
+	to_top2(stack_b, stack_a, pos);
 }
 void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
 {

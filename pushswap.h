@@ -6,7 +6,7 @@
 /*   By: nmellal <nmellal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:24 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/16 01:43:12 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/16 03:15:00 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int		find_elem_in_range(t_node *stack_a, int *arr, t_ctrl ctrl);
 t_ctrl	update_ctrl(t_ctrl ctrl);
 void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl);
 void	sort_bigs(t_node **stack_a, t_node **stack_b);
-
+void	to_top(t_node **stack_a, t_node **stack_b, int position, int min_value);
+void	to_top2(t_node **stack_b, t_node **stack_a, int position);
 
 #endif /* PUSHSWAP */
