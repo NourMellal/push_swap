@@ -6,7 +6,7 @@
 /*   By: nmellal <nmellal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 00:09:12 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/16 03:26:17 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/17 04:49:15 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,21 +260,94 @@ int	find_max_pos(t_node *stack_b)
 	return (pos);
 }
 
-void	push_back_to_a(t_node **stack_a, t_node **stack_b)
+int	its_correct_pos(t_node *stack_a, t_node *stack_b, int *arr, t_ctrl ctrl)
+{
+	int i;
+
+	i = 0;
+	while (i < ctrl.size)
+	{
+		if (stack_a->n == arr[i])
+			break;
+		i++;
+	}
+	if (stack_b->n == arr[i - 1] && i > 0)
+		return (1);
+	return (0);
+}
+int	is_n_in_stack_a(t_node *stack_a, int *arr, t_ctrl ctrl)
+{
+	int i;
+
+	i = 0;
+	while (i < ctrl.size)
+	{
+		if (stack_a->n == arr[i])
+			break;
+		i++;
+	}
+	while (stack_a)
+	{
+		if (i > 0 && arr[i - 1] == stack_a->n)
+			return (1);
+		stack_a = stack_a->next;
+	}
+	return (0);
+}
+
+int last_is_max(t_node *stack_a, int max)
+{
+	while (stack_a->next)
+		stack_a = stack_a->next;
+	// printf("\nstack a %d\n", stack_a->n);
+	// printf("max %d\n\n", max);
+	if (stack_a->n == max)
+		return (1);
+	return (0);
+}
+
+int is_greater(int stack_b_val, t_node *stack_a)
+{
+	while (stack_a->next)
+		stack_a = stack_a->next;
+	// printf("stack a %d\n", stack_a->n);
+	// printf("stack_b_val %d\n\n", stack_b_val);
+	if (stack_b_val > stack_a->n)
+		return (1);
+	return (0);
+}
+void	push_back_to_a(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
 {
 	int pos;
+	t_node	*tmp;
 
+	tmp = *stack_b;
 	pos = find_max_pos(*stack_b);
 	to_top2(stack_b, stack_a, pos);
+	// printf(" ========== >%d\n", arr[ctrl.size - 1]);
+	while (*stack_b)
+	{
+		display_list(*stack_a);
+		display_list(*stack_b);
+		if (is_n_in_stack_a(*stack_a, arr, ctrl))
+			rra(stack_a);
+		else if (its_correct_pos(*stack_a, *stack_b, arr, ctrl))
+			push_to(stack_b, stack_a, 'a');
+		else if (last_is_max(*stack_a, arr[ctrl.size - 1]) || is_greater((*stack_b)->n, *stack_a))
+		{
+			push_to(stack_b, stack_a, 'a');
+			ra(stack_a);
+		}
+		else
+			rb(stack_b);
+	}
 }
 void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
 {
 	int		pos;
 	
-	// print_array(arr, ctrl.size);
 	while (*stack_a)
 	{
-		// printf("mid: %d, offset: %d, start: %d, end: %d, arr[mid]: %d\n",ctrl.mid, ctrl.offset, ctrl.start, ctrl.end, arr[ctrl.mid]);
 		if (is_in_range(ctrl, arr, (*stack_a)->n))
 		{
 			push_to(stack_a, stack_b, 'b');
@@ -284,14 +357,14 @@ void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
 		else if(find_elem_in_range(*stack_a, arr, ctrl) != -1)
 		{
 			pos = find_elem_in_range(*stack_a, arr, ctrl);
-			to_top(stack_a, stack_a, pos, 0);
+			to_top(stack_a, stack_b, pos, 0);
 			if ((*stack_b)->n < arr[ctrl.mid])
 				rb(stack_b);
 		}
 		else
 			ctrl = update_ctrl(ctrl);
 	}
-	push_back_to_a(stack_a, stack_b);
+	push_back_to_a(stack_a, stack_b, arr, ctrl);
 }
 
 void	sort_bigs(t_node **stack_a, t_node **stack_b)

@@ -6,7 +6,7 @@
 /*   By: nmellal <nmellal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:24 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/16 03:15:00 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/17 02:45:32 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,11 @@ void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl);
 void	sort_bigs(t_node **stack_a, t_node **stack_b);
 void	to_top(t_node **stack_a, t_node **stack_b, int position, int min_value);
 void	to_top2(t_node **stack_b, t_node **stack_a, int position);
+void	push_back_to_a(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl);
+int is_greater(int stack_b_val, t_node *stack_a);
+int last_is_max(t_node *stack_a, int max);
+int	is_n_in_stack_a(t_node *stack_a, int *arr, t_ctrl ctrl);
+int	its_correct_pos(t_node *stack_a, t_node *stack_b, int *arr, t_ctrl ctrl);
+int	find_max_pos(t_node *stack_b);
 
 #endif /* PUSHSWAP */
