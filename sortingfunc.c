@@ -6,17 +6,17 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 00:09:12 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/17 17:34:49 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/17 19:58:49 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-void	to_top(t_node **stack_a, t_node **stack_b, int position, int min_value)
+void	to_top(t_node **stack_a, t_node **stack_b, int position)
 {
 	if ((list_length(*stack_a) / 2) < position + 1)
 	{
-		while (position--)
+		while (position++ < list_length(*stack_a))
 			rra(stack_a);
 		push_to(stack_a, stack_b, 'b');
 	}
@@ -26,14 +26,13 @@ void	to_top(t_node **stack_a, t_node **stack_b, int position, int min_value)
 			ra(stack_a);
 		push_to(stack_a, stack_b, 'b');
 	}
-	(void)min_value;
 }
 
 void	to_top2(t_node **stack_b, t_node **stack_a, int position)
 {
 	if ((list_length(*stack_b) / 2) < position + 1)
 	{
-		while (position--)
+		while (position++ < list_length(*stack_b))
 			rra(stack_b);
 		push_to(stack_b, stack_a, 'a');
 	}
@@ -48,36 +47,35 @@ void	to_top2(t_node **stack_b, t_node **stack_a, int position)
 void	sort_five(t_node **stack_a, t_node **stack_b)
 {
 	int		position;
-	t_node	*curr;
-	int		min;
 
-	min = 0;
-	curr = *stack_a;
-	while (list_length(curr) > 3)
+	while (list_length(*stack_a) > 3)
 	{
-		position = find_min_position(*stack_a, &min);
-		to_top(stack_a, stack_b, position, min);
-		curr = *stack_a;
+		position = find_min_position(*stack_a);
+		// printf("%d\n", position);
+		to_top(stack_a, stack_b, position);
 	}
+	// display_list(*stack_a);
+	// display_list(*stack_b);
 	sort_three(stack_a);
 	push_to(stack_b, stack_a, 'a');
 	push_to(stack_b, stack_a, 'a');
 }
 
-int	find_min_position(t_node *stack, int *min)
+int	find_min_position(t_node *stack)
 {
 	int	position;
 	int	i;
+	int min;
 
-	*min = INT_MAX;
+	min = INT_MAX;
 	i = 0;
 	position = 0;
 	while (stack)
 	{
-		if (stack->n < *min)
+		if (stack->n < min)
 		{
 			position = i;
-			*min = stack->n;
+			min = stack->n;
 		}
 		stack = stack->next;
 		i++;
@@ -353,7 +351,7 @@ void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
 		else if (find_elem_in_range(*stack_a, arr, ctrl) != -1)
 		{
 			pos = find_elem_in_range(*stack_a, arr, ctrl);
-			to_top(stack_a, stack_b, pos, 0);
+			to_top(stack_a, stack_b, pos);
 			if ((*stack_b)->n < arr[ctrl.mid])
 				rb(stack_b);
 		}
@@ -406,38 +404,24 @@ void	starting_point(t_node **stack_a, t_node **stack_b)
 
 void	sort_three(t_node **stack)
 {
-	int	top;
-	int	middle;
-	int	bottom;
+	int	position;
 
-	top = (*stack)->n;
-	middle = (*stack)->next->n;
-	bottom = (*stack)->next->next->n;
-	if (top > middle && middle < bottom && top < bottom)
+	position = find_max_pos(*stack);
+	if ((list_length(*stack) / 2) < position + 1)
 	{
-		// Case: 2 1 3 -> Only need to swap the top two.
+		while (++position < list_length(*stack))
+			rra(stack);
+	}
+	else
+	{
+		while (position--)
+			ra(stack);
+	}
+	if (!list_is_sorted(*stack))
 		sa(stack);
-	}
-	else if (top > middle && middle > bottom)
-	{
-		// Case: 3 2 1 -> Swap the top two, then rotate down.
-		sa(stack);
-		rra(stack);
-	}
-	else if (top > middle && middle < bottom && top > bottom)
-	{
-		// Case: 3 1 2 -> Rotate up.
-		ra(stack);
-	}
-	else if (top < middle && middle > bottom && top < bottom)
-	{
-		// Case: 1 3 2 -> Swap the top two, then rotate up.
-		sa(stack);
-		ra(stack);
-	}
-	else if (top < middle && middle > bottom && top > bottom)
-	{
-		// Case: 2 3 1 -> Rotate down.
-		rra(stack);
-	}
 }
+//1 3 2 rra 2 1 3 sa 1 2 3
+//      sa  3 1 2 ra 1 2 3
+//3 2 1 sa  2 3 1 rra 1 2 3
+//2 1 3
+//2 3 1

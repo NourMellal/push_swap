@@ -4,7 +4,7 @@ OBJS = ${SRC:.c=.o}
 
 NAME = libftprintf.a
 
-CFLAGS = -Wall -Werror -Wextra -fPIC -I printf.h
+CFLAGS = -Wall -Werror -Wextra -I printf.h
 
 INCLUDES = -I printf.h
 

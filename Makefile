@@ -22,7 +22,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	make -C $(LIBFT)
 	make -C $(FT_PRINTF)
-	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME) -pie
+	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME) 
 
 # Object file creation
 %.o: %.c

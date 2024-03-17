@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pushswap.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmellal <nmellal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:24 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/17 02:45:32 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/17 19:32:57 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	push_back(t_node **stack_a, t_node **stack_b);
 void sort_three(t_node **stack);
 // void	sort_two(t_node **stack)
 // int is_sorted(t_node *head)
-int	find_min_position(t_node *stack, int *min);
+int	find_min_position(t_node *stack);
 void	sort_bigs(t_node **stack_a, t_node **stack_b);
 void swap_ele(int *arr, int i, int j);
 int partition(int *arr, int start, int end, void (*swap)(int [], int, int));
@@ -93,7 +93,7 @@ int		find_elem_in_range(t_node *stack_a, int *arr, t_ctrl ctrl);
 t_ctrl	update_ctrl(t_ctrl ctrl);
 void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl);
 void	sort_bigs(t_node **stack_a, t_node **stack_b);
-void	to_top(t_node **stack_a, t_node **stack_b, int position, int min_value);
+void	to_top(t_node **stack_a, t_node **stack_b, int position);
 void	to_top2(t_node **stack_b, t_node **stack_a, int position);
 void	push_back_to_a(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl);
 int is_greater(int stack_b_val, t_node *stack_a);
