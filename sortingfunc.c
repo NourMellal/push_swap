@@ -46,7 +46,7 @@ void	to_top2(t_node **stack_b, t_node **stack_a, int position)
 
 void	sort_five(t_node **stack_a, t_node **stack_b)
 {
-	int		position;
+	int	position;
 
 	while (list_length(*stack_a) > 3)
 	{
@@ -65,7 +65,7 @@ int	find_min_position(t_node *stack)
 {
 	int	position;
 	int	i;
-	int min;
+	int	min;
 
 	min = INT_MAX;
 	i = 0;
@@ -420,8 +420,8 @@ void	sort_three(t_node **stack)
 	if (!list_is_sorted(*stack))
 		sa(stack);
 }
-//1 3 2 rra 2 1 3 sa 1 2 3
+// 1 3 2 rra 2 1 3 sa 1 2 3
 //      sa  3 1 2 ra 1 2 3
-//3 2 1 sa  2 3 1 rra 1 2 3
-//2 1 3
-//2 3 1
+// 3 2 1 sa  2 3 1 rra 1 2 3
+// 2 1 3
+// 2 3 1

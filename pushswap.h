@@ -27,15 +27,15 @@ typedef struct s_node
 
 }					t_node;
 
-typedef	struct s_control_var
+typedef struct s_control_var
 {
-	int size;
-	int	div;
-	int mid;
-	int offset;
-	int start;
-	int end;
-}				t_ctrl;
+	int				size;
+	int				div;
+	int				mid;
+	int				offset;
+	int				start;
+	int				end;
+}					t_ctrl;
 
 /* stacks/parsing implementation*/
 
@@ -53,7 +53,8 @@ void				parsing_args(int ac, char **av, t_node **stack_a);
 void				process_args(char *arg, t_node **stack_a);
 void				add_to_stack(char *num_str, t_node **stack_a);
 int					check_for_dup(t_node *stack_a);
-void				push_to(t_node **stack_from, t_node **stack_to, char stack_name);
+void				push_to(t_node **stack_from, t_node **stack_to,
+						char stack_name);
 void				rr(t_node **stack_a, t_node **stack_b);
 void				sa(t_node **stack_a);
 void				sb(t_node **stack_b);
@@ -64,42 +65,46 @@ void				rrb(t_node **stack_b);
 void				rrr(t_node **stack_a, t_node **stack_b);
 void				display_error(void);
 
-
-
 /* sorting implementation */
 
-int		list_is_sorted(t_node *stack);
-void	starting_point(t_node **stack_a, t_node **stack_b);
-int		is_the_max(t_node *stack_a, t_node *stack_b);
-int		is_the_min(t_node *stack_a, t_node *stack_b);
-void	sort_two_desc(t_node **stack);
-void	sort_two_asc(t_node **stack);
-void	init_push(t_node **stack_a, t_node **stack_b);
-void	push_back(t_node **stack_a, t_node **stack_b);
-void sort_three(t_node **stack);
+int					list_is_sorted(t_node *stack);
+void				starting_point(t_node **stack_a, t_node **stack_b);
+int					is_the_max(t_node *stack_a, t_node *stack_b);
+int					is_the_min(t_node *stack_a, t_node *stack_b);
+void				sort_two_desc(t_node **stack);
+void				sort_two_asc(t_node **stack);
+void				init_push(t_node **stack_a, t_node **stack_b);
+void				push_back(t_node **stack_a, t_node **stack_b);
+void				sort_three(t_node **stack);
 // void	sort_two(t_node **stack)
 // int is_sorted(t_node *head)
-int	find_min_position(t_node *stack);
-void	sort_bigs(t_node **stack_a, t_node **stack_b);
-void swap_ele(int *arr, int i, int j);
-int partition(int *arr, int start, int end, void (*swap)(int [], int, int));
-void quick_sort_helper(int *arr, int start, int end, int arr_size, void (*swap)(int[], int, int));
-void quick_sort(int *arr, int arr_size, void (*swap)(int [], int, int));
-void print_array(const int *array, size_t size);
-int ft_sqrt(int nb);
-t_ctrl	define_ctrl_var(int size, int div);
-int		is_in_range(t_ctrl ctrl, int *arr, int elem);
-int		find_elem_in_range(t_node *stack_a, int *arr, t_ctrl ctrl);
-t_ctrl	update_ctrl(t_ctrl ctrl);
-void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl);
-void	sort_bigs(t_node **stack_a, t_node **stack_b);
-void	to_top(t_node **stack_a, t_node **stack_b, int position);
-void	to_top2(t_node **stack_b, t_node **stack_a, int position);
-void	push_back_to_a(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl);
-int is_greater(int stack_b_val, t_node *stack_a);
-int last_is_max(t_node *stack_a, int max);
-int	is_n_in_stack_a(t_node *stack_a, int *arr, t_ctrl ctrl);
-int	its_correct_pos(t_node *stack_a, t_node *stack_b, int *arr, t_ctrl ctrl);
-int	find_max_pos(t_node *stack_b);
+int					find_min_position(t_node *stack);
+void				sort_bigs(t_node **stack_a, t_node **stack_b);
+void				swap_ele(int *arr, int i, int j);
+int					partition(int *arr, int start, int end, void (*swap)(int[],
+							int, int));
+void				quick_sort_helper(int *arr, int start, int end,
+						int arr_size, void (*swap)(int[], int, int));
+void				quick_sort(int *arr, int arr_size, void (*swap)(int[], int,
+							int));
+void				print_array(const int *array, size_t size);
+int					ft_sqrt(int nb);
+t_ctrl				define_ctrl_var(int size, int div);
+int					is_in_range(t_ctrl ctrl, int *arr, int elem);
+int					find_elem_in_range(t_node *stack_a, int *arr, t_ctrl ctrl);
+t_ctrl				update_ctrl(t_ctrl ctrl);
+void				sorting_proc(t_node **stack_a, t_node **stack_b, int *arr,
+						t_ctrl ctrl);
+void				sort_bigs(t_node **stack_a, t_node **stack_b);
+void				to_top(t_node **stack_a, t_node **stack_b, int position);
+void				to_top2(t_node **stack_b, t_node **stack_a, int position);
+void				push_back_to_a(t_node **stack_a, t_node **stack_b, int *arr,
+						t_ctrl ctrl);
+int					is_greater(int stack_b_val, t_node *stack_a);
+int					last_is_max(t_node *stack_a, int max);
+int					is_n_in_stack_a(t_node *stack_a, int *arr, t_ctrl ctrl);
+int					its_correct_pos(t_node *stack_a, t_node *stack_b, int *arr,
+						t_ctrl ctrl);
+int					find_max_pos(t_node *stack_b);
 
 #endif /* PUSHSWAP */
