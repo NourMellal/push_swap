@@ -70,7 +70,7 @@ t_node	*init_node(int data)
 void	display_error(void)
 {
 	ft_putstr_fd("Error\n", 2);
-	exit (1);
+	exit(1);
 }
 
 void	push(t_node **head, int data)
@@ -110,8 +110,8 @@ int	pop(t_node **head)
 }
 void	push_to(t_node **stack_from, t_node **stack_to, char stack_name)
 {
-	t_node *curr;
-	t_node *new_node;
+	t_node	*curr;
+	t_node	*new_node;
 
 	if (!*stack_from)
 		return ;
@@ -131,7 +131,6 @@ void	push_to(t_node **stack_from, t_node **stack_to, char stack_name)
 	// push(stack_to, (*stack_from)->n);
 	ft_printf("p%c\n", stack_name);
 }
-
 
 void	swap(t_node **head)
 {
@@ -321,11 +320,10 @@ int	check_for_dup(t_node *stack_a)
 	return (1);
 }
 
-
 int	main(int argc, char **argv)
 {
 	t_node	*stack_a;
-	t_node *stack_b;
+	t_node	*stack_b;
 
 	stack_b = NULL;
 	stack_a = NULL;

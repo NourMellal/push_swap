@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sortingfunc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmellal <nmellal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 00:09:12 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/17 04:49:15 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/17 17:34:49 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	to_top2(t_node **stack_b, t_node **stack_a, int position)
 
 void	sort_five(t_node **stack_a, t_node **stack_b)
 {
-	int position;
+	int		position;
 	t_node	*curr;
-	int min;
+	int		min;
 
 	min = 0;
 	curr = *stack_a;
@@ -62,7 +62,6 @@ void	sort_five(t_node **stack_a, t_node **stack_b)
 	sort_three(stack_a);
 	push_to(stack_b, stack_a, 'a');
 	push_to(stack_b, stack_a, 'a');
-
 }
 
 int	find_min_position(t_node *stack, int *min)
@@ -86,12 +85,9 @@ int	find_min_position(t_node *stack, int *min)
 	return (position);
 }
 
-
-
-
 int	list_is_sorted(t_node *stack)
 {
-	t_node *nxt;
+	t_node	*nxt;
 
 	if (!stack)
 		return (0);
@@ -107,17 +103,18 @@ int	list_is_sorted(t_node *stack)
 
 void	swap_ele(int *arr, int i, int j)
 {
-	int tmp;
+	int	tmp;
 
 	tmp = arr[j];
 	arr[j] = arr[i];
 	arr[i] = tmp;
 }
 
-int	partition(int *arr, int start, int end, void (*swap)(int [], int, int))
+int	partition(int *arr, int start, int end, void (*swap)(int[], int, int))
 {
 	int	i;
 	int	j;
+
 	// [2, 1, 3, 4, 9, 8, 5<-]
 	i = start - 1;
 	j = start;
@@ -136,26 +133,27 @@ int	partition(int *arr, int start, int end, void (*swap)(int [], int, int))
 	return (i);
 }
 
-void	quick_sort_helper(int *arr, int start, int end, int arr_size, void (*swap)(int[], int, int))
+void	quick_sort_helper(int *arr, int start, int end, int arr_size,
+		void (*swap)(int[], int, int))
 {
 	int	pivot;
 
 	if (end <= start)
 		return ;
-	pivot = partition(arr, start, end, swap);	
+	pivot = partition(arr, start, end, swap);
 	quick_sort_helper(arr, start, pivot - 1, arr_size, swap);
 	quick_sort_helper(arr, pivot + 1, end, arr_size, swap);
 }
 
-void	quick_sort(int *arr, int arr_size, void (*swap)(int [], int, int))
+void	quick_sort(int *arr, int arr_size, void (*swap)(int[], int, int))
 {
 	if (!arr || arr_size < 2)
 		return ;
 	quick_sort_helper(arr, 0, arr_size - 1, arr_size, swap);
 }
-void print_array(const int *array, size_t size)
+void	print_array(const int *array, size_t size)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (array && i < size)
@@ -168,9 +166,9 @@ void print_array(const int *array, size_t size)
 	printf("\n");
 }
 
-int ft_sqrt(int nb)
+int	ft_sqrt(int nb)
 {
-	int sqrt;
+	int	sqrt;
 
 	if (nb <= 0)
 		return (0);
@@ -186,7 +184,7 @@ int ft_sqrt(int nb)
 
 t_ctrl	define_ctrl_var(int size, int div)
 {
-	t_ctrl control;
+	t_ctrl	control;
 
 	control.size = size;
 	control.div = div;
@@ -194,11 +192,11 @@ t_ctrl	define_ctrl_var(int size, int div)
 	control.offset = size / div;
 	control.start = control.mid - control.offset;
 	control.end = control.mid + control.offset;
-	return control;
+	return (control);
 }
-int		is_in_range(t_ctrl ctrl, int *arr, int elem)
+int	is_in_range(t_ctrl ctrl, int *arr, int elem)
 {
-	int i;
+	int	i;
 
 	i = ctrl.start;
 	while (i <= ctrl.end)
@@ -212,7 +210,7 @@ int		is_in_range(t_ctrl ctrl, int *arr, int elem)
 int	find_elem_in_range(t_node *stack_a, int *arr, t_ctrl ctrl)
 {
 	int	i;
-	int position;
+	int	position;
 
 	position = 0;
 	while (stack_a)
@@ -235,12 +233,12 @@ t_ctrl	update_ctrl(t_ctrl ctrl)
 	ctrl.start -= ctrl.offset;
 	if (ctrl.start < 0)
 		ctrl.start = 0;
-	ctrl.end += ctrl. offset;
+	ctrl.end += ctrl.offset;
 	return (ctrl);
 }
 int	find_max_pos(t_node *stack_b)
 {
-	int max;
+	int	max;
 	int	pos;
 	int	i;
 
@@ -262,13 +260,13 @@ int	find_max_pos(t_node *stack_b)
 
 int	its_correct_pos(t_node *stack_a, t_node *stack_b, int *arr, t_ctrl ctrl)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < ctrl.size)
 	{
 		if (stack_a->n == arr[i])
-			break;
+			break ;
 		i++;
 	}
 	if (stack_b->n == arr[i - 1] && i > 0)
@@ -277,13 +275,13 @@ int	its_correct_pos(t_node *stack_a, t_node *stack_b, int *arr, t_ctrl ctrl)
 }
 int	is_n_in_stack_a(t_node *stack_a, int *arr, t_ctrl ctrl)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < ctrl.size)
 	{
 		if (stack_a->n == arr[i])
-			break;
+			break ;
 		i++;
 	}
 	while (stack_a)
@@ -295,7 +293,7 @@ int	is_n_in_stack_a(t_node *stack_a, int *arr, t_ctrl ctrl)
 	return (0);
 }
 
-int last_is_max(t_node *stack_a, int max)
+int	last_is_max(t_node *stack_a, int max)
 {
 	while (stack_a->next)
 		stack_a = stack_a->next;
@@ -306,34 +304,32 @@ int last_is_max(t_node *stack_a, int max)
 	return (0);
 }
 
-int is_greater(int stack_b_val, t_node *stack_a)
+int	is_greater(int stack_b_val, t_node *stack_a)
 {
 	while (stack_a->next)
 		stack_a = stack_a->next;
-	// printf("stack a %d\n", stack_a->n);
+	// printf("stack a %d\n", stack_a->n);	tmp = *stack_b;
 	// printf("stack_b_val %d\n\n", stack_b_val);
 	if (stack_b_val > stack_a->n)
 		return (1);
 	return (0);
 }
-void	push_back_to_a(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
+void	push_back_to_a(t_node **stack_a, t_node **stack_b, int *arr,
+		t_ctrl ctrl)
 {
-	int pos;
-	t_node	*tmp;
+	int	pos;
 
-	tmp = *stack_b;
 	pos = find_max_pos(*stack_b);
 	to_top2(stack_b, stack_a, pos);
 	// printf(" ========== >%d\n", arr[ctrl.size - 1]);
 	while (*stack_b)
 	{
-		display_list(*stack_a);
-		display_list(*stack_b);
 		if (is_n_in_stack_a(*stack_a, arr, ctrl))
 			rra(stack_a);
 		else if (its_correct_pos(*stack_a, *stack_b, arr, ctrl))
 			push_to(stack_b, stack_a, 'a');
-		else if (last_is_max(*stack_a, arr[ctrl.size - 1]) || is_greater((*stack_b)->n, *stack_a))
+		else if (last_is_max(*stack_a, arr[ctrl.size - 1])
+			|| is_greater((*stack_b)->n, *stack_a))
 		{
 			push_to(stack_b, stack_a, 'a');
 			ra(stack_a);
@@ -344,8 +340,8 @@ void	push_back_to_a(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
 }
 void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
 {
-	int		pos;
-	
+	int	pos;
+
 	while (*stack_a)
 	{
 		if (is_in_range(ctrl, arr, (*stack_a)->n))
@@ -354,7 +350,7 @@ void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
 			if ((*stack_b)->n < arr[ctrl.mid])
 				rb(stack_b);
 		}
-		else if(find_elem_in_range(*stack_a, arr, ctrl) != -1)
+		else if (find_elem_in_range(*stack_a, arr, ctrl) != -1)
 		{
 			pos = find_elem_in_range(*stack_a, arr, ctrl);
 			to_top(stack_a, stack_b, pos, 0);
@@ -365,16 +361,18 @@ void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
 			ctrl = update_ctrl(ctrl);
 	}
 	push_back_to_a(stack_a, stack_b, arr, ctrl);
+	while (!list_is_sorted(*stack_a))
+		rra(stack_a);
 }
 
 void	sort_bigs(t_node **stack_a, t_node **stack_b)
 {
-	int				 *sorted_arr;
-	int				i;
-	t_node			*curr;
+	int		*sorted_arr;
+	int		i;
+	t_node	*curr;
 	t_ctrl	ctrl;
-	int				size;
-	
+	int		size;
+
 	curr = *stack_a;
 	size = list_length(*stack_a);
 	sorted_arr = malloc(sizeof(int) * size);
@@ -390,29 +388,31 @@ void	sort_bigs(t_node **stack_a, t_node **stack_b)
 	quick_sort(sorted_arr, size, swap_ele);
 	ctrl = define_ctrl_var(size, ft_sqrt(size));
 	sorting_proc(stack_a, stack_b, sorted_arr, ctrl);
+	free(sorted_arr);
+	sorted_arr = NULL;
 }
 
 void	starting_point(t_node **stack_a, t_node **stack_b)
 {
-	if (list_length(*stack_a) == 5)
-	{
-		sort_five(stack_a, stack_b);
-		return ;
-	}
+	if (list_length(*stack_a) == 2)
+		sa(stack_a);
 	else if (list_length(*stack_a) == 3)
-	{
 		sort_three(stack_a);
-		return ;
-	}
-	sort_bigs(stack_a, stack_b);
+	else if (list_length(*stack_a) == 5)
+		sort_five(stack_a, stack_b);
+	else
+		sort_bigs(stack_a, stack_b);
 }
 
-void sort_three(t_node **stack)
+void	sort_three(t_node **stack)
 {
-	int top = (*stack)->n;
-	int middle = (*stack)->next->n;
-	int bottom = (*stack)->next->next->n;
+	int	top;
+	int	middle;
+	int	bottom;
 
+	top = (*stack)->n;
+	middle = (*stack)->next->n;
+	bottom = (*stack)->next->next->n;
 	if (top > middle && middle < bottom && top < bottom)
 	{
 		// Case: 2 1 3 -> Only need to swap the top two.
@@ -440,59 +440,4 @@ void sort_three(t_node **stack)
 		// Case: 2 3 1 -> Rotate down.
 		rra(stack);
 	}
-	// If none of the above conditions are met, the stack is already sorted (1 2 3).
 }
-
-// void	sort_two_asc(t_node **stack)
-// {
-// 	if ((*stack)->n > (*stack)->next->n)
-// 		sb(stack);
-// }
-
-// void	sort_two_desc(t_node **stack)
-// {
-// 	if ((*stack)->n < (*stack)->next->n)
-// 		sb(stack);
-// }
-
-// int	is_the_min(t_node *stack_a, t_node *stack_b)
-// {
-// 	if (!stack_a || !stack_b)
-// 		return (-1);
-// 	while(stack_b)
-// 	{
-// 		if (stack_b->n < stack_a->n)
-// 			//its not the minimum
-// 			return (0);
-// 		stack_b = stack_b->next;
-// 	}
-// 	//it is the minimum
-// 	return (1);
-// }
-// int	is_the_max(t_node *stack_a, t_node *stack_b)
-// {
-// 	if (!stack_a || !stack_b)
-// 		return (-1);
-// 	while(stack_b)
-// 	{
-// 		if (stack_b->n > stack_a->n)
-// 			//its not the max
-// 			return (0);
-// 		stack_b = stack_b->next;
-// 	}
-// 	//it is the minimum
-// 	return (1);
-// }
-
-
-
-// int	is_sorted(t_node *head)
-// {
-// 	while (head && head->next)
-// 	{
-// 		if (head->n > head->next->n)
-// 			return (0);
-// 		head = head->next;
-// 	}
-// 	return (1);
-// }
