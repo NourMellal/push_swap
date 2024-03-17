@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 00:09:12 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/17 19:58:49 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/17 21:03:51 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	sort_five(t_node **stack_a, t_node **stack_b)
 	// display_list(*stack_a);
 	// display_list(*stack_b);
 	sort_three(stack_a);
-	push_to(stack_b, stack_a, 'a');
-	push_to(stack_b, stack_a, 'a');
+	while (*stack_b)
+		push_to(stack_b, stack_a, 'a');
 }
 
 int	find_min_position(t_node *stack)
@@ -396,7 +396,7 @@ void	starting_point(t_node **stack_a, t_node **stack_b)
 		sa(stack_a);
 	else if (list_length(*stack_a) == 3)
 		sort_three(stack_a);
-	else if (list_length(*stack_a) == 5)
+	else if (list_length(*stack_a) == 5 || list_length(*stack_a) == 4)
 		sort_five(stack_a, stack_b);
 	else
 		sort_bigs(stack_a, stack_b);
