@@ -1,5 +1,5 @@
 # Compiler and compiling flags
-CC = cc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 # Project file names

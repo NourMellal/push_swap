@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 00:09:12 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/18 04:22:14 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/18 22:54:55 by sloukili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ void	to_top2(t_node **stack_b, t_node **stack_a, int position)
 	if ((list_length(*stack_b) / 2) < position + 1)
 	{
 		while (position++ < list_length(*stack_b))
-			rra(stack_b);
+			rrb(stack_b);
 		push_to(stack_b, stack_a, 'a');
 	}
 	else
 	{
 		while (position--)
-			ra(stack_b);
+			rb(stack_b);
 		push_to(stack_b, stack_a, 'a');
 	}
 }
@@ -329,6 +329,30 @@ void fixprob( t_node **stack_b, int pos, int num)
 				rb(stack_b);
 		}
 }
+
+int	get_big(t_node *stack_b, int ret)
+{
+	int p;
+	int n;
+	int i;
+
+	i = 0;
+	p = 0;
+	n = stack_b->n;
+	while (stack_b)
+	{
+		if (stack_b->n > n)
+		{
+			p = i;
+			n = stack_b->n;
+		}
+		i++;
+		stack_b = stack_b->next;
+	}
+	if (ret == 1)
+		return (p);
+	return (n);
+}
 void	push_back_to_a(t_node **stack_a, t_node **stack_b, int *arr,
 		t_ctrl ctrl)
 {
@@ -351,22 +375,9 @@ void	push_back_to_a(t_node **stack_a, t_node **stack_b, int *arr,
 		}
 		else
 		{
-			int npos = arr[list_length(*stack_b) - 1];
-			int i = 0;
-			t_node *temp = *stack_b;
-			while (temp)
-			{
-				if (temp->n == npos)
-				{
-					npos = i;
-					break;
-				}
-				i++;
-				temp = temp->next;
-			}
-			fixprob(stack_b, npos, arr[list_length(*stack_b) - 1]);
-			//rb(stack_b);
+			int np = get_big(*stack_b, 1);
 
+			fixprob(stack_b, np, get_big(*stack_b, 2));
 		}
 	}
 }
