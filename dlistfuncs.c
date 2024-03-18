@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dlistfuncs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmellal <nmellal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:22 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/17 03:01:55 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/18 01:40:54 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,7 +342,8 @@ int	main(int argc, char **argv)
 	}
 	// to be continue
 	starting_point(&stack_a, &stack_b);
-	display_list(stack_a);
+	// display_list(stack_a);
+	// printf("%d\n", list_is_sorted(stack_a));
 	delete_list(&stack_a);
 	return (0);
 }

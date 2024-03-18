@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 00:09:12 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/17 21:03:51 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/18 04:22:14 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	sort_five(t_node **stack_a, t_node **stack_b)
 	while (list_length(*stack_a) > 3)
 	{
 		position = find_min_position(*stack_a);
-		// printf("%d\n", position);
 		to_top(stack_a, stack_b, position);
 	}
 	// display_list(*stack_a);
@@ -186,7 +185,7 @@ t_ctrl	define_ctrl_var(int size, int div)
 
 	control.size = size;
 	control.div = div;
-	control.mid = size / 2 - 1;
+	control.mid = size / 2;
 	control.offset = size / div;
 	control.start = control.mid - control.offset;
 	control.end = control.mid + control.offset;
@@ -232,6 +231,8 @@ t_ctrl	update_ctrl(t_ctrl ctrl)
 	if (ctrl.start < 0)
 		ctrl.start = 0;
 	ctrl.end += ctrl.offset;
+	if (ctrl.end > ctrl.size - 1)
+		ctrl.end = ctrl.size - 1;
 	return (ctrl);
 }
 int	find_max_pos(t_node *stack_b)
@@ -275,6 +276,8 @@ int	is_n_in_stack_a(t_node *stack_a, int *arr, t_ctrl ctrl)
 {
 	int	i;
 
+	if (!stack_a)
+		return (0);
 	i = 0;
 	while (i < ctrl.size)
 	{
@@ -312,6 +315,20 @@ int	is_greater(int stack_b_val, t_node *stack_a)
 		return (1);
 	return (0);
 }
+
+void fixprob( t_node **stack_b, int pos, int num)
+{
+	if (list_length(*stack_b) - pos + 1 <= pos)
+		{
+			while ((*stack_b)->n != num)
+				rrb(stack_b);
+		}
+	else
+		{
+			while ((*stack_b)->n != num)
+				rb(stack_b);
+		}
+}
 void	push_back_to_a(t_node **stack_a, t_node **stack_b, int *arr,
 		t_ctrl ctrl)
 {
@@ -333,13 +350,30 @@ void	push_back_to_a(t_node **stack_a, t_node **stack_b, int *arr,
 			ra(stack_a);
 		}
 		else
-			rb(stack_b);
+		{
+			int npos = arr[list_length(*stack_b) - 1];
+			int i = 0;
+			t_node *temp = *stack_b;
+			while (temp)
+			{
+				if (temp->n == npos)
+				{
+					npos = i;
+					break;
+				}
+				i++;
+				temp = temp->next;
+			}
+			fixprob(stack_b, npos, arr[list_length(*stack_b) - 1]);
+			//rb(stack_b);
+
+		}
 	}
 }
 void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
 {
 	int	pos;
-
+	// 0 1 2 3 4 5 6 7 8 9 10
 	while (*stack_a)
 	{
 		if (is_in_range(ctrl, arr, (*stack_a)->n))
@@ -356,7 +390,10 @@ void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
 				rb(stack_b);
 		}
 		else
+		{
 			ctrl = update_ctrl(ctrl);
+		}
+
 	}
 	push_back_to_a(stack_a, stack_b, arr, ctrl);
 	while (!list_is_sorted(*stack_a))
@@ -420,8 +457,4 @@ void	sort_three(t_node **stack)
 	if (!list_is_sorted(*stack))
 		sa(stack);
 }
-// 1 3 2 rra 2 1 3 sa 1 2 3
-//      sa  3 1 2 ra 1 2 3
-// 3 2 1 sa  2 3 1 rra 1 2 3
-// 2 1 3
-// 2 3 1
+
