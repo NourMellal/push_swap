@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:24 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/17 19:32:57 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/19 02:09:02 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
 typedef struct s_node
 {
 	int				n;
@@ -81,12 +82,10 @@ void				sort_three(t_node **stack);
 int					find_min_position(t_node *stack);
 void				sort_bigs(t_node **stack_a, t_node **stack_b);
 void				swap_ele(int *arr, int i, int j);
-int					partition(int *arr, int start, int end, void (*swap)(int[],
-							int, int));
+int					partition(int *arr, int start, int end);
 void				quick_sort_helper(int *arr, int start, int end,
-						int arr_size, void (*swap)(int[], int, int));
-void				quick_sort(int *arr, int arr_size, void (*swap)(int[], int,
-							int));
+						int arr_size);
+void				quick_sort(int *arr, int arr_size);
 void				print_array(const int *array, size_t size);
 int					ft_sqrt(int nb);
 t_ctrl				define_ctrl_var(int size, int div);
@@ -106,5 +105,8 @@ int					is_n_in_stack_a(t_node *stack_a, int *arr, t_ctrl ctrl);
 int					its_correct_pos(t_node *stack_a, t_node *stack_b, int *arr,
 						t_ctrl ctrl);
 int					find_max_pos(t_node *stack_b);
+void				fixprob(t_node **stack_b, int pos, int num);
+int					get_big(t_node *stack_b, int ret);
+void				sort_five(t_node **stack_a, t_node **stack_b);
 
 #endif /* PUSHSWAP */
