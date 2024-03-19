@@ -6,15 +6,15 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 20:19:24 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/19 02:09:02 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/19 21:37:54 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
 
-# include "ft_printf.h"
-# include "libft.h"
+# include "ft_libft/libft.h"
+# include "ft_printf/ft_printf.h"
 # include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -64,6 +64,7 @@ void				rb(t_node **stack_b);
 void				rra(t_node **stack_a);
 void				rrb(t_node **stack_b);
 void				rrr(t_node **stack_a, t_node **stack_b);
+void				ss(t_node **stack_a, t_node **stack_b);
 void				display_error(void);
 
 /* sorting implementation */

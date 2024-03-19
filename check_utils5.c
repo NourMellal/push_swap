@@ -1,60 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sortingfunc_part7.c                                :+:      :+:    :+:   */
+/*   check_utils5.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 01:59:31 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/19 20:56:52 by nmellal          ###   ########.fr       */
+/*   Created: 2024/03/19 21:26:02 by nmellal           #+#    #+#             */
+/*   Updated: 2024/03/19 23:48:00 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pushswap.h"
+#include "checker.h"
 
-void	sorting_proc(t_node **stack_a, t_node **stack_b, int *arr, t_ctrl ctrl)
+int	pop(t_node **head)
 {
-	int	pos;
+	int		data;
+	t_node	*tmp;
 
-	while (*stack_a)
-	{
-		if (is_in_range(ctrl, arr, (*stack_a)->n))
-		{
-			push_to(stack_a, stack_b, 'b');
-			if ((*stack_b)->n < arr[ctrl.mid])
-				rb(stack_b);
-		}
-		else if (find_elem_in_range(*stack_a, arr, ctrl) != -1)
-		{
-			pos = find_elem_in_range(*stack_a, arr, ctrl);
-			to_top(stack_a, stack_b, pos);
-			if ((*stack_b)->n < arr[ctrl.mid])
-				rb(stack_b);
-		}
-		else
-		{
-			ctrl = update_ctrl(ctrl);
-		}
-	}
-	push_back_to_a(stack_a, stack_b, arr, ctrl);
-	while (!list_is_sorted(*stack_a))
-		rra(stack_a);
+	if (!*head)
+		return (-1);
+	data = (*head)->n;
+	tmp = *head;
+	*head = (*head)->next;
+	if (*head)
+		(*head)->prev = NULL;
+	free(tmp);
+	return (data);
 }
 
-int	ft_sqrt(int nb)
+void	rotate(t_node **head)
 {
-	int	sqrt;
+	t_node	*first;
+	t_node	*last;
 
-	if (nb <= 0)
-		return (0);
-	sqrt = 1;
-	while (sqrt * sqrt <= nb)
-	{
-		if (sqrt * sqrt == nb)
-			return (sqrt);
-		sqrt++;
-	}
-	return (sqrt);
+	if (!*head || !(*head)->next)
+		return ;
+	first = *head;
+	last = *head;
+	while (last->next)
+		last = last->next;
+	*head = first->next;
+	(*head)->prev = NULL;
+	last->next = first;
+	first->prev = last;
+	first->next = NULL;
 }
 
 void	add_to_stack(char *num_str, t_node **stack_a)
