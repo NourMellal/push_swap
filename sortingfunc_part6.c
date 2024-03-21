@@ -6,7 +6,7 @@
 /*   By: nmellal <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:49:12 by nmellal           #+#    #+#             */
-/*   Updated: 2024/03/19 02:15:33 by nmellal          ###   ########.fr       */
+/*   Updated: 2024/03/20 13:27:10 by nmellal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,10 @@ void	sort_three(t_node **stack)
 	int	position;
 
 	position = find_max_pos(*stack);
-	if ((list_length(*stack) / 2) < position + 1)
-	{
-		while (++position < list_length(*stack))
+	if (position == 0)
+		ra(stack);
+	else if (position == 1)
 			rra(stack);
-	}
-	else
-	{
-		while (position--)
-			ra(stack);
-	}
 	if (!list_is_sorted(*stack))
 		sa(stack);
 }

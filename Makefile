@@ -57,3 +57,4 @@ re: fclean all
 
 # Phony targets
 .PHONY: all clean fclean re bonus
+.SECONDARY: $(OBJ) $(BONUS_OBJ)
