@@ -25,36 +25,29 @@ FT_PRINTF = ./ft_printf
 INCLUDES = -I$(LIBFT) -I$(FT_PRINTF) -I.
 LDFLAGS = -L$(LIBFT) -lft -L$(FT_PRINTF) -lftprintf
 
-# Default target
 all: $(NAME)
 
-# Compile the project
 $(NAME): $(OBJ)
 	$(MAKE) -C $(LIBFT)
 	$(MAKE) -C $(FT_PRINTF)
 	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
 
-# Bonus target
 bonus: $(BONUS_OBJ)
 	$(MAKE) -C $(LIBFT)
 	$(MAKE) -C $(FT_PRINTF)
 	$(CC) $(BONUS_OBJ) $(LDFLAGS) -o $(BONUS_NAME)
 
-# Cleaning up the object files
 clean:
 	$(MAKE) clean -C $(LIBFT)
 	$(MAKE) clean -C $(FT_PRINTF)
 	rm -f $(OBJ) $(BONUS_OBJ)
 
-# Full clean (objects and executable)
 fclean: clean
 	$(MAKE) fclean -C $(LIBFT)
 	$(MAKE) fclean -C $(FT_PRINTF)
 	rm -f $(NAME) $(BONUS_NAME)
 
-# Re-compile everything
 re: fclean all
 
-# Phony targets
 .PHONY: all clean fclean re bonus
 .SECONDARY: $(OBJ) $(BONUS_OBJ)
